@@ -1,255 +1,64 @@
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap');
-
-.dashboard {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  min-height: 100vh;
-  background-image: url("./assets/download (4).jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  padding: 60px 20px;
-  box-sizing: border-box;
-  gap: 24px;
-  position: relative;
-  overflow-x: hidden;
-  font-family: 'Caveat', cursive, sans-serif;
-}
-
-.dashboard h1 {
-  font-family: 'Caveat', cursive, sans-serif; /* Explicitly forces the handwriting font */
-  color: #ff8fa3;
-  text-align: center;
-  font-size: 4.5rem; /* Slightly increased size for a bigger impact */
-  font-weight: 800;
-  margin: 0;
-  text-shadow: 3px 3px 0px #1e1e1e;
-  letter-spacing: 1px;
-}
-
-.goal-title {
-  color: #1e1e1e;
-  font-size: 2.8rem;
-  font-weight: 800;
-  margin: 10px 0 0 0;
-  font-family: 'Caveat', cursive, sans-serif;
-  text-align: center;
-}
-
-.pig-container {
-  position: fixed;
-  top: 60px;
-  right: 9%; 
-  z-index: 100;
-  pointer-events: none;
-}
-
-.pig-image {
-  width: 240px;
-  height: 240px;
-  object-fit: contain;
-  filter: drop-shadow(5px 5px 0px rgba(0, 0, 0, 0.1));
-  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.progress-wrapper {
+/* Append this clean spacing to your Dashboard.css file */
+.dashboard-window-content {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-width: 450px;
-  gap: 8px;
-}
-
-.progress-container {
-  width: 100%;
-  height: 32px;
-  border: 4px solid #1e1e1e;
-  background: #e0e0e0;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 4px 4px 0px #1e1e1e;
-  position: relative;
-}
-
-.progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #ff8fa3, #ffb3c1);
-  border-radius: 16px;
-  position: relative;
-  box-shadow: inset 0 -4px 8px rgba(0, 0, 0, 0.15);
-  animation: progressGlow 2s ease-in-out infinite alternate;
-}
-
-@keyframes progressGlow {
-  from { filter: brightness(1); }
-  to { filter: brightness(1.08); }
-}
-
-.dashboard p {
-  font-size: 1.6rem;
-  font-weight: 800;
-  color: #1e1e1e;
-  margin: 0;
-}
-
-.action-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #fffdf9;
-  padding: 30px;
-  border-radius: 24px;
-  border: 4px solid #1e1e1e;
-  box-shadow: 8px 8px 0px #1e1e1e;
-  width: 100%;
-  max-width: 450px;
-  box-sizing: border-box;
   gap: 16px;
+  font-family: 'Caveat', cursive, sans-serif;
 }
-
-.dashboard input[type="number"] {
+.dashboard-title {
+  font-size: 3.5rem;
+  color: #ff8fa3;
+  margin: 0;
+  text-shadow: 2px 2px 0px #1e1e1e;
+}
+.savings-display {
+  font-size: 2.2rem;
+  font-weight: 900;
+  margin: 0;
+  color: #1e1e1e;
+}
+.invite-badge {
+  background: #fffdf0;
+  border: 2px solid #1e1e1e;
+  padding: 4px 12px;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+.invite-badge span {
+  color: #ff8fa3;
+  font-weight: 900;
+}
+.percent-text {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+.dashboard-input {
   width: 100%;
-  padding: 12px;
-  background-color: #333333;
-  color: #ffffff;
+  padding: 10px;
   border: 3px solid #1e1e1e;
-  border-radius: 16px;
-  font-size: 1.5rem;
-  box-sizing: border-box;
+  border-radius: 12px;
   text-align: center;
+  font-size: 1.3rem;
   font-family: 'Caveat', cursive, sans-serif;
   font-weight: bold;
 }
-
-.dashboard input::placeholder {
-  color: #aaaaaa;
-}
-
-.dashboard button {
-  width: 100%;
+.dashboard-btn {
   padding: 12px;
-  background-color: #ff8fa3;
-  color: #ffffff;
+  background: #ff8fa3;
+  color: white;
   border: 3px solid #1e1e1e;
-  border-radius: 16px;
-  font-size: 1.6rem;
-  font-weight: 900;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 1.4rem;
   cursor: pointer;
   box-shadow: 4px 4px 0px #1e1e1e;
   font-family: 'Caveat', cursive, sans-serif;
-  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  transition: transform 0.1s;
 }
-
-.dashboard button:active {
-  transform: translate(3px, 3px);
-  box-shadow: 1px 1px 0px #1e1e1e;
-}
-
-.transactions {
-  width: 100%;
-  max-width: 450px;
-  background: #fffdf9;
-  padding: 24px;
-  border-radius: 24px;
-  border: 4px solid #1e1e1e;
-  box-shadow: 8px 8px 0px #1e1e1e;
-  box-sizing: border-box;
-  text-align: center;
-}
-
-.transactions h3 {
-  margin: 0 0 16px 0;
-  color: #1e1e1e;
-  font-size: 2rem;
-  font-weight: 900;
-}
-
-.transaction-list {
-  max-height: 150px;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding-right: 4px;
-}
-
-.transaction-item {
-  background: #fff0f3;
-  padding: 8px;
-  border-radius: 12px;
-  border: 2px solid #1e1e1e;
-  font-weight: 800;
-  color: #ff8fa3;
-  margin: 0;
-  text-align: center;
-  font-size: 1.5rem;
+.dashboard-btn:active {
+  transform: translate(2px, 2px);
   box-shadow: 2px 2px 0px #1e1e1e;
-}
-
-.secondary-actions {
-  display: flex;
-  width: 100%;
-  max-width: 450px;
-  gap: 16px;
-}
-
-.secondary-actions button {
-  background-color: #ffffff;
-  color: #1e1e1e;
-  flex: 1;
-}
-
-.goal-achieved {
-  color: #2e7d32;
-  font-weight: 900;
-  margin: 8px 0 0 0;
-  text-align: center;
-}
-
-.coin-shower {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  z-index: 101;
-}
-
-.coin {
-  position: fixed;
-  font-size: 50px;
-  animation: dropCoinToPiggy 0.9s cubic-bezier(0.55, 0.055, 0.675, 0.19) forwards;
-}
-
-@keyframes dropCoinToPiggy {
-  0% {
-    top: 15%;
-    left: 50%;
-    transform: scale(1) rotate(0deg);
-    opacity: 1;
-  }
-  90% {
-    opacity: 1;
-  }
-  100% {
-    top: 110px;
-    left: calc(85% + 40px);
-    transform: scale(0.3) rotate(360deg);
-    opacity: 0;
-  }
-}
-
-.bounce {
-  animation: bouncePiggy 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-@keyframes bouncePiggy {
-  0% { transform: scale(1); }
-  30% { transform: scale(1.2) rotate(-8deg); }
-  70% { transform: scale(0.95) rotate(4deg); }
-  100% { transform: scale(1) rotate(0deg); }
 }

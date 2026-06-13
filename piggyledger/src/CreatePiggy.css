@@ -170,3 +170,15 @@
   margin: 4px 0;
   color: #ff8fa3;
 }
+
+/* Append this custom addition to your CreatePiggy.css file */
+.child-join-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+}
+.code-input {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}

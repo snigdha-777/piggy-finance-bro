@@ -19,7 +19,7 @@
   left: 40px;
   display: flex;
   flex-direction: column;
-  gap: 20px;                     /* Adjusted gap matching LandingPage layout */
+  gap: 20px;
   z-index: 10;
 }
 
@@ -28,7 +28,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 80px;                  /* Bounding sizing synchronized across views */
+  width: 80px;
   height: 85px;
   cursor: pointer;
   border: 3px solid transparent;
@@ -36,7 +36,7 @@
   transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.2s;
 }
 
-.icon:hover {
+.icon:hover, .active-shortcut {
   transform: translateY(-4px);
   background: rgba(255, 253, 249, 0.85);
   border-color: #1e1e1e;
@@ -44,7 +44,7 @@
 }
 
 .desktop-icon-img {
-  width: 42px;                  /* Balanced precise image scale dimensions */
+  width: 42px;
   height: 42px;
   object-fit: contain;
 }
@@ -66,14 +66,15 @@
   text-align: center;
   font-size: 1.2rem;
   color: #1e1e1e;
-  width: 80px;                  /* Adjusted to align perfectly under the icons */
+  width: 80px;
+  box-sizing: border-box;
 }
 
 /* Retro App Window Layout Popups */
 .retro-window-popup {
   position: absolute;
-  top: 46%;                     /* Balanced vertical centering for taskbar clearance */
-  left: 50%;
+  top: 46%;
+  left: 54%;
   transform: translate(-50%, -50%);
   width: 100%;
   max-width: 550px;
@@ -81,9 +82,55 @@
   border: 4px solid #1e1e1e;
   border-radius: 24px;
   box-shadow: 10px 10px 0px #1e1e1e;
-  padding: 24px;
   z-index: 100;
   box-sizing: border-box;
+  overflow: hidden;
+}
+
+.core-dashboard-window {
+  max-width: 620px;
+}
+
+/* Dynamic Window OS Header Bar Styles */
+.window-titlebar {
+  background: #ff8fa3;
+  border-bottom: 4px solid #1e1e1e;
+  padding: 10px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.titlebar-text {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: #ffffff;
+  text-shadow: 2px 2px 0px #1e1e1e;
+}
+
+.titlebar-controls {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: #1e1e1e;
+  cursor: pointer;
+  background: #ffffff;
+  border: 2px solid #1e1e1e;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  box-shadow: 2px 2px 0px #1e1e1e;
+}
+
+.titlebar-controls:active {
+  transform: translate(1px, 1px);
+  box-shadow: 0px 0px 0px #1e1e1e;
+}
+
+.window-body-content {
+  padding: 24px;
 }
 
 .retro-window-popup h2 {
@@ -91,11 +138,11 @@
   color: #ff8fa3;
   text-shadow: 2px 2px 0px #1e1e1e;
   text-align: center;
-  margin-bottom: 15px;
+  margin: 0 0 15px 0;
 }
 
 .popup-list-container {
-  max-height: 260px;
+  max-height: 220px;
   overflow-y: auto;
   border: 3px solid #1e1e1e;
   padding: 12px;
@@ -157,8 +204,13 @@
 .ledger-log-row {
   border-bottom: 2px dashed #1e1e1e;
   padding: 8px 0;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   color: #1e1e1e;
+}
+
+.user-tag {
+  color: #8b5cf6;
+  font-weight: 900;
 }
 
 .pink-text {
@@ -188,24 +240,40 @@
   color: #1e1e1e;
 }
 
-/* 🖥️ IMAGE TASKBAR WRAPPER CONFIGURATION */
+/* 🌀 Smooth Spring-Bounce Window Entry Animation */
+.window-entry-bounce {
+  animation: springEntry 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes springEntry {
+  0% {
+    transform: translate(-50%, -40%) scale(0.85);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
+
+/* 🖥️ TASKBAR CONFIGURATION */
 .system-taskbar-wrapper {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 48px;                 /* Matches the exact height of the image-bar */
+  height: 48px;
   z-index: 500;
   overflow: hidden;
   display: flex;
   align-items: center;
-  background: transparent;      /* Removes the previous solid background */
-  border: none;                 /* Removes blocky bounding lines */
+  background: transparent;
+  border: none;
 }
 
 .taskbar-background-image {
   width: 100%;
   height: 100%;
   object-fit: fill;
-  pointer-events: none;         /* Disables highlighting or selection boxes */
+  pointer-events: none;
 }
