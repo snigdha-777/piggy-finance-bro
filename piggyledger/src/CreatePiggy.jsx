@@ -4,31 +4,31 @@ import "./CreatePiggy.css";
 function CreatePiggy({ setPiggy }) {
   const [piggyName, setPiggyName] = useState("");
   const [goal, setGoal] = useState("");
+  const [date, setDate] = useState(""); // Added state
   const [member, setMember] = useState("");
   const [members, setMembers] = useState([]);
 
   function addMember() {
     if (!member.trim()) return;
-
     setMembers([...members, member]);
     setMember("");
   }
 
-function createPiggy() {
-
-  const pigData = {
-    name: piggyName,
-    goal: goal,
-    members: members,
-  };
-
-  setPiggy(pigData);
-}
+  function createPiggy() {
+    const pigData = {
+      name: piggyName,
+      goal: goal,
+      date: date, // Added date to payload
+      members: members,
+    };
+    setPiggy(pigData);
+  }
 
   return (
     <div className="create-page">
       <div className="create-box">
-        <h1>Create Your Piggy</h1>
+        {/* Updated heading styling class */}
+        <h1 className="create-title">Create Your Piggy</h1>
 
         <input
           type="text"
@@ -44,35 +44,33 @@ function createPiggy() {
           onChange={(e) => setGoal(e.target.value)}
         />
 
-        <input type="date" />
+        <input 
+          type="date" 
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+        />
 
-        <div
-          style={{
-            display: "flex",
-            gap: "10px",
-          }}
-        >
+        <div className="member-input-group">
           <input
             type="text"
             placeholder="Member Name"
             value={member}
             onChange={(e) => setMember(e.target.value)}
           />
-
-          <button onClick={addMember}>
+          <button type="button" className="add-btn" onClick={addMember}>
             Add
           </button>
         </div>
 
-        <div>
-          {members.map((m, index) => (
-            <p key={index}>
-              👤 {m}
-            </p>
-          ))}
-        </div>
+        {members.length > 0 && (
+          <div className="members-list">
+            {members.map((m, index) => (
+              <p key={index}>👤 {m}</p>
+            ))}
+          </div>
+        )}
 
-        <button onClick={createPiggy}>
+        <button type="button" className="create-btn" onClick={createPiggy}>
           Create Piggy
         </button>
       </div>
