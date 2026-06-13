@@ -1,0 +1,31 @@
+PIGGYLEDGER
+
+User creates piggy bank
+
+↓
+
+Adds friends
+
+↓
+
+Everyone adds money
+
+↓
+
+Pig grows
+
+↓
+
+Someone requests withdrawal
+
+↓
+
+Contributors vote
+
+↓
+
+Money withdrawn
+
+↓
+
+Monthly AI letter
