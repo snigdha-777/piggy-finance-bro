@@ -4,7 +4,6 @@ import "./Dashboard.css";
 function Dashboard({
   piggy,
   globalRole,
-  piggyType,
   globalWallet,
   setGlobalWallet,
   onUpdatePiggy
@@ -17,27 +16,17 @@ function Dashboard({
 
   const handleDeposit = () => {
     const amount = Number(depositAmount);
-
     if (!amount || amount <= 0) {
       alert("Enter a valid amount!");
       return;
     }
-
     if (amount > globalWallet) {
       alert("Not enough money in wallet! 💸");
       return;
     }
 
-    const formattedDate = new Date().toLocaleDateString("en-GB", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric"
-    });
-
-    const formattedTime = new Date().toLocaleTimeString("en-GB", {
-      hour: "2-digit",
-      minute: "2-digit"
-    });
+    const formattedDate = new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "2-digit", year: "numeric" });
+    const formattedTime = new Date().toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
 
     const newLog = {
       timestamp: `${formattedDate}, ${formattedTime}`,
@@ -48,7 +37,6 @@ function Dashboard({
     };
 
     setGlobalWallet(globalWallet - amount);
-
     onUpdatePiggy({
       ...piggy,
       savedAmount: (piggy.savedAmount || 0) + amount,
@@ -59,36 +47,31 @@ function Dashboard({
     setDepositNote("");
   };
 
-  // 🚨 REVISED WITHDRAWAL ALGORITHMS WITH CONSENT RULES
   const handleWithdrawalRequest = () => {
     const amount = Number(withdrawAmount);
-
     if (!amount || amount <= 0) {
       alert("Enter a valid amount to withdraw!");
       return;
     }
-
     if (amount > (piggy.savedAmount || 0)) {
       alert("You cannot withdraw more than what is inside the Piggy! 🚫");
       return;
     }
 
-    // Rule 1: Solo Piggy Vaults -> Direct Confirmation
-    if (piggy.type !== "family") {
-      const confirmSolo = window.confirm(`Are you sure you want to withdraw ₹${amount} from your Solo vault?`);
-      if (confirmSolo) {
-        finalizeWithdrawal(amount);
-      }
+    if (piggy.type !== "Family") {
+      const confirmSolo = window.confirm(`Are you sure you want to withdraw ₹${amount}?`);
+      if (confirmSolo) finalizeWithdrawal(amount);
       return;
     }
 
-    // Rule 2: Shared Family Vaults -> Requires Permission from each active contributor
-    if (piggy.contributors && piggy.contributors.length > 0) {
+    // Dynamic Voting Rules Engine for Joint Workspaces
+    if (piggy.members && piggy.members.length > 0) {
       alert(`⚠️ Shared Vault Rule Triggered!\nThis action requires consent from all registered participants.`);
-      
       let allApproved = true;
-      for (let i = 0; i < piggy.contributors.length; i++) {
-        const approval = window.confirm(`[VOTE] Does family member "${piggy.contributors[i]}" approve this ₹${amount} withdrawal?`);
+      
+      for (let i = 0; i < piggy.members.length; i++) {
+        if (piggy.members[i] === "Creator") continue; 
+        const approval = window.confirm(`[VOTE] Does contributor "${piggy.members[i]}" approve this ₹${amount} withdrawal?`);
         if (!approval) {
           allApproved = false;
           break;
@@ -99,10 +82,9 @@ function Dashboard({
         alert("🎉 Excellent! All contributors voted YES. Processing funds transfer...");
         finalizeWithdrawal(amount);
       } else {
-        alert("❌ Withdrawal Denied! One or more family members rejected your request.");
+        alert("❌ Withdrawal Denied! Consensus was not reached.");
       }
     } else {
-      // Fallback fallback if no family members entered yet
       finalizeWithdrawal(amount);
     }
   };
@@ -119,71 +101,74 @@ function Dashboard({
       note: "Approved withdrawal moved back to wallet!"
     };
 
-    setGlobalWallet(globalWallet + amount); // Adds money back to wallet
+    setGlobalWallet(globalWallet + amount);
     onUpdatePiggy({
       ...piggy,
       savedAmount: (piggy.savedAmount || 0) - amount,
       logs: [newLog, ...(piggy.logs || [])]
     });
-
     setWithdrawAmount("");
   };
 
-  const progressPercent = Math.min((((piggy.savedAmount || 0) / piggy.goal) * 100), 100);
+  const progressPercent = piggy.goal > 0 ? Math.min(((piggy.savedAmount || 0) / piggy.goal) * 100, 100) : 0;
 
   return (
-    <div className="dashboard-content-wrapper">
-      <h1 className="dashboard-title">{piggy.name}</h1>
-      
+    <div className="dashboard-scroll-body">
       {piggy.inviteCode && (
-        <div className="invite-badge">
-          Share Invite Code: <span>{piggy.inviteCode}</span>
+        <div className="dashboard-invite-badge">
+          Invite Code: {piggy.inviteCode}
         </div>
       )}
 
-      <p className="savings-display">₹{piggy.savedAmount || 0} / ₹{piggy.goal}</p>
+      <h1 className="dashboard-display-title">{piggy.name}</h1>
+      
+      <p className="savings-display-text">
+        ₹{piggy.savedAmount || 0} / ₹{piggy.goal}
+      </p>
 
-      {/* 📊 PROGRESS CONTAINER */}
-      <div className="progress-wrapper">
-        <div className="progress-container">
-          <div className="progress-fill" style={{ width: `${progressPercent}%` }}></div>
+      <div className="progress-bar-wrapper">
+        <div className="progress-bar-container">
+          <div className="progress-bar-fill" style={{ width: `${progressPercent}%` }}></div>
         </div>
-        <span className="percent-text">{progressPercent.toFixed(0)}% Complete</span>
+        <span className="progress-percent-label">
+          {progressPercent.toFixed(0)}% Complete
+        </span>
       </div>
 
-      {/* 💰 DEPOSIT PANEL */}
-      <div className="deposit-panel" style={{ marginBottom: "15px" }}>
-        <h3>Feed Piggy 🪙</h3>
+      {/* DEPOSIT ACTION PANEL */}
+      <div className="dashboard-action-panel">
         <input 
           type="number" 
-          placeholder="Enter Amount (₹)" 
+          placeholder="Amount to deposit (₹)" 
           value={depositAmount} 
-          className="dashboard-input"
           onChange={(e) => setDepositAmount(e.target.value)} 
+          className="dashboard-retro-input"
         />
         <input 
           type="text" 
           placeholder="Attach a message note..." 
           value={depositNote} 
-          className="dashboard-input"
           onChange={(e) => setDepositNote(e.target.value)} 
+          className="dashboard-retro-input"
         />
-        <button type="button" className="dashboard-btn" onClick={handleDeposit}>
+        <button type="button" className="dashboard-feed-btn" onClick={handleDeposit}>
           Feed Piggy 🐷
         </button>
       </div>
 
-      {/* 🔓 WITHDRAWAL PANEL */}
-      <div className="deposit-panel" style={{ background: "#fff0f3", borderColor: "#e63946" }}>
-        <h3>Break Open Vault 🔨</h3>
+      {/* WITHDRAWAL ACTION PANEL */}
+      <div className="dashboard-action-panel withdrawal-border">
+        <span className="break-vault-title">
+          Break Open Vault 🔨
+        </span>
         <input 
           type="number" 
           placeholder="Amount to extract (₹)" 
           value={withdrawAmount} 
-          className="dashboard-input"
           onChange={(e) => setWithdrawAmount(e.target.value)} 
+          className="dashboard-retro-input"
         />
-        <button type="button" className="dashboard-btn" style={{ background: "#e63946" }} onClick={handleWithdrawalRequest}>
+        <button type="button" className="dashboard-withdraw-btn" onClick={handleWithdrawalRequest}>
           Request Funds Release
         </button>
       </div>

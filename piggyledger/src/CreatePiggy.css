@@ -1,19 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap');
 
+/* HTML and Body safety overrides to force browser-level scrolling */
+html, body {
+  overflow-y: auto !important;
+  height: auto !important;
+}
+
 .create-page {
   display: flex;
   justify-content: center;
-  align-items: center;
-  /* Changed from min-height: 100vh to fit properly within the fixed screen */
-  height: calc(100vh - 50px); 
+  align-items: flex-start; /* 🔥 FIX: Aligns box to top so it scrolls naturally down */
+  min-height: 100vh; /* 🔥 FIX: Allows container to expand past viewport height */
   width: 100vw;
   box-sizing: border-box;
-  padding: 20px;
+  padding: 60px 20px; /* Gives nice spacing at top and bottom */
   background-image: url("./assets/download (4).jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   font-family: 'Caveat', cursive, sans-serif;
+  overflow-y: visible !important; /* 🔥 FIX: Ensures page scroll is never intercepted */
 }
 
 .create-box {
@@ -23,37 +29,22 @@
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center;
-  padding: 130px 50px 50px 50px;
+  padding: 120px 45px 45px 45px; 
   width: 100%;
   max-width: 520px;
   box-sizing: border-box;
   gap: 16px;
-
-  /* 🚨 FIXES SCROLLING WITHOUT RUINING THE RETRO SKIN 🚨 */
-  max-height: 90vh;
-  overflow-y: auto;
-  scrollbar-width: thin; /* For Firefox */
-}
-
-/* Retro Custom Scrollbar styling inside the paper container */
-.create-box::-webkit-scrollbar {
-  width: 8px;
-}
-
-.create-box::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.create-box::-webkit-scrollbar-thumb {
-  background: #ff8fa3;
-  border: 2px solid #1e1e1e;
-  border-radius: 10px;
+  
+  /* 🔥 FIX: Completely unlock heights so the notepad element expands naturally */
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important; 
 }
 
 .create-title {
   color: #ff8fa3;
   text-align: center;
-  margin: 0 0 10px 0;
+  margin: 0 0 5px 0;
   font-size: 3.2rem;
   font-weight: 800;
   text-shadow: 3px 3px 0px #1e1e1e;
@@ -86,7 +77,7 @@
   cursor: pointer;
 }
 
-/* 🎰 Retro Role Selector Framework Elements */
+/* Retro Role Selector */
 .role-selection-card {
   display: flex;
   flex-direction: column;
@@ -137,7 +128,7 @@
   color: #ff4a4a;
 }
 
-/* Members UI Area Layouts */
+/* Members Area */
 .member-input-group {
   display: flex;
   width: 100%;
@@ -168,7 +159,7 @@
 .create-btn {
   width: 100%;
   padding: 12px;
-  margin-top: 10px;
+  margin-top: 5px;
   font-size: 1.6rem;
 }
 
@@ -177,33 +168,52 @@
   box-shadow: 1px 1px 0px #1e1e1e;
 }
 
+/* 🔥 FIXED & EXPANDED MEMBERS WORKSPACE VIEW */
 .members-list {
-  background: #fffdf9;
-  padding: 12px;
-  border-radius: 16px;
-  border: 2px solid #1e1e1e;
-  color: #1e1e1e;
-  max-height: 120px; /* Slight bump for visibility balance */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 6px 0;
+  
+  /* FIXED: Blown up box sizes so it looks robust and airy */
+  height: auto !important; 
+  min-height: 90px; /* Snaps open into a spacious container box right away */
+  max-height: 200px; 
   overflow-y: auto;
-  box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.05);
+  
+  background: #333333; 
+  border: 3px solid #1e1e1e;
+  border-radius: 16px;
+  padding: 12px;
+  box-sizing: border-box;
 }
 
 .member-tag {
-  font-size: 1.3rem;
-  font-weight: 800;
-  margin: 4px 0;
-  color: #ff8fa3;
-}
-
-/* Append this custom addition to your CreatePiggy.css file */
-.child-join-panel {
   display: flex;
-  flex-direction: column;
-  gap: 14px;
-  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #222222; 
+  border: 2px solid #1e1e1e;
+  border-radius: 10px;
+  padding: 8px 14px;
+  margin: 0; 
+  font-family: 'Caveat', cursive, sans-serif;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #ffffff; 
 }
 
-.code-input {
-  text-transform: uppercase;
-  letter-spacing: 2px;
+/* Custom Scrollbars */
+.members-list::-webkit-scrollbar {
+  width: 8px;
+}
+.members-list::-webkit-scrollbar-track {
+  background: #222222;
+  border-radius: 10px;
+}
+.members-list::-webkit-scrollbar-thumb {
+  background: #ff8fa3;
+  border-radius: 10px;
+  border: 1px solid #1e1e1e;
 }

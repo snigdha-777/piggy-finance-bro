@@ -1,41 +1,34 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./CreatePiggy.css";
 
-function CreatePiggy({ setPiggy, piggyType, lockedFamilyRole, setGlobalRole }) {
+function CreatePiggy({ setPiggy, piggyType, globalRole, setGlobalRole }) {
   const [piggyName, setPiggyName] = useState("");
   const [goal, setGoal] = useState("");
   const [date, setDate] = useState(""); 
   const [member, setMember] = useState("");
-  
-  // Load family members permanently from localStorage if they exist
-  const [members, setMembers] = useState(() => {
-    const saved = localStorage.getItem("permanent_family_members");
-    return saved ? JSON.parse(saved) : [];
-  });
+  const [members, setMembers] = useState([]);
   
   const [inviteCodeInput, setInviteCodeInput] = useState("");
-  const [familyRole, setFamilyRole] = useState(lockedFamilyRole || "parent");
-
-  // Save changes permanently to localStorage whenever members array updates
-  const updateAndPersistMembers = (newMembersArray) => {
-    setMembers(newMembersArray);
-    localStorage.setItem("permanent_family_members", JSON.stringify(newMembersArray));
-  };
+  const [localRole, setLocalRole] = useState(globalRole || "parent");
 
   function addMember() {
     if (!member.trim()) return;
+
+    if (piggyType === "Friends" && members.length >= 6) {
+      alert("You can add a maximum of 6 friends!");
+      return;
+    }
+
     if (members.includes(member.trim())) {
       alert("Member already added!");
       return;
     }
-    const updated = [...members, member.trim()];
-    updateAndPersistMembers(updated);
+    setMembers([...members, member.trim()]);
     setMember("");
   }
 
   function removeMember(indexToRemove) {
-    const updated = members.filter((_, idx) => idx !== indexToRemove);
-    updateAndPersistMembers(updated);
+    setMembers(members.filter((_, idx) => idx !== indexToRemove));
   }
 
   function handleJoinCode() {
@@ -43,6 +36,7 @@ function CreatePiggy({ setPiggy, piggyType, lockedFamilyRole, setGlobalRole }) {
       alert("Please enter a valid family invite code!");
       return;
     }
+    // Set global identity state definitively on execution completion
     setGlobalRole("child");
     setPiggy({
       name: "Family Vault",
@@ -54,11 +48,10 @@ function CreatePiggy({ setPiggy, piggyType, lockedFamilyRole, setGlobalRole }) {
       type: "Family",
       inviteCode: inviteCodeInput.trim(),
       logs: [
-        { timestamp: "13-06-2026, 14:22", user: "Parent 👑", type: "deposit", amount: 15000, note: "Initial family base pool setup." }
+        { timestamp: "13-06-2026, 14:22", user: "Parent 👑", type: "deposit", amount: 15000, note: "Initial family pool setup." }
       ]
-    }
-  );
-}
+    });
+  }
 
   function createPiggy() {
     if (!piggyName.trim() || !goal) {
@@ -66,16 +59,25 @@ function CreatePiggy({ setPiggy, piggyType, lockedFamilyRole, setGlobalRole }) {
       return;
     }
 
-    const generatedCode = piggyType === "Family" ? "PIGGY-" + Math.floor(1000 + Math.random() * 9000) : null;
-    setGlobalRole(piggyType === "Family" ? familyRole : "owner");
+    if (piggyType === "Friends" && members.length < 2) {
+      alert("Please add at least 2 friends to start a group vault!");
+      return;
+    }
+
+    const isFamily = piggyType === "Family";
+    const isGroup = piggyType === "Family" || piggyType === "Friends";
+    const generatedCode = isGroup ? "PIGGY-" + Math.floor(1000 + Math.random() * 9000) : null;
+    
+    // Commit the locked choice globally now that workspace is validated
+    setGlobalRole(isFamily ? localRole : "parent");
 
     setPiggy({
       name: piggyName,
       goal: Number(goal),
       savedAmount: 0,
       date: date, 
-      members: piggyType === "Solo" ? [] : ["Creator", ...members],
-      role: piggyType === "Family" ? familyRole : "owner",
+      members: isGroup ? ["Creator", ...members] : [],
+      role: isFamily ? localRole : "parent",
       type: piggyType,
       inviteCode: generatedCode,
       logs: []
@@ -87,31 +89,30 @@ function CreatePiggy({ setPiggy, piggyType, lockedFamilyRole, setGlobalRole }) {
       <div className="create-box">
         <h1 className="create-title">Create Your Piggy</h1>
 
+        {/* FIXED: Removed the block wrapping so role buttons are accessible all the time */}
         {piggyType === "Family" && (
           <div className="role-selection-card">
             <span className="role-title">Select Your Family Role:</span>
-            {!lockedFamilyRole && (
-              <div className="role-btn-group">
-                <button
-                  type="button"
-                  className={`role-toggle-btn ${familyRole === "parent" ? "active" : ""}`}
-                  onClick={() => setFamilyRole("parent")}
-                >
-                  Parent 👑
-                </button>
-                <button
-                  type="button"
-                  className={`role-toggle-btn ${familyRole === "child" ? "active" : ""}`}
-                  onClick={() => setFamilyRole("child")}
-                >
-                  Child 🧸
-                </button>
-              </div>
-            )}
+            <div className="role-btn-group">
+              <button
+                type="button"
+                className={`role-toggle-btn ${localRole === "parent" ? "active" : ""}`}
+                onClick={() => setLocalRole("parent")}
+              >
+                Parent 👑
+              </button>
+              <button
+                type="button"
+                className={`role-toggle-btn ${localRole === "child" ? "active" : ""}`}
+                onClick={() => setLocalRole("child")}
+              >
+                Child 🧸
+              </button>
+            </div>
           </div>
         )}
 
-        {piggyType === "Family" && familyRole === "child" ? (
+        {piggyType === "Family" && localRole === "child" ? (
           <div className="child-join-panel">
             <p className="role-notice-text">🧸 Children cannot create goals. Enter a code from a family member to join:</p>
             <input
@@ -139,12 +140,12 @@ function CreatePiggy({ setPiggy, piggyType, lockedFamilyRole, setGlobalRole }) {
             />
             <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
 
-            {piggyType !== "Solo" && (
+            {(piggyType === "Family" || piggyType === "Friends") && (
               <>
                 <div className="member-input-group">
                   <input
                     type="text"
-                    placeholder="Member Name"
+                    placeholder={piggyType === "Friends" ? "Friend Name" : "Member Name"}
                     value={member}
                     onChange={(e) => setMember(e.target.value)}
                   />
@@ -157,7 +158,7 @@ function CreatePiggy({ setPiggy, piggyType, lockedFamilyRole, setGlobalRole }) {
                         <span>👤 {m}</span>
                         <span 
                           onClick={() => removeMember(i)} 
-                          style={{ cursor: "pointer", color: "#ff8fa3", fontWeight: "bold", marginLeft: "10px", fontSize: "1.2rem" }}
+                          style={{ cursor: "pointer", color: "#ff8fa3", fontWeight: "bold", marginLeft: "10px" }}
                         >
                           ×
                         </span>

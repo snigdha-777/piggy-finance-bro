@@ -1,7 +1,7 @@
 import "./ChooseType.css";
 import soloImage from "./assets/download (6).png";    
 import familyImage from "./assets/download (7).jpg";  
-import friendsImage from "./assets/download (6).jpeg"; 
+import friendsImage from "./assets/friends.png"; 
 
 function ChooseType({ onSelectType }) {
   return (

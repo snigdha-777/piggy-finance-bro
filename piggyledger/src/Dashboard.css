@@ -148,3 +148,138 @@
   transform: translate(3px, 3px);
   box-shadow: 1px 1px 0px #1e1e1e;
 }
+
+.dashboard-scroll-body {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Big Display Elements */
+.dashboard-display-title {
+  color: #ff8fa3;
+  text-align: center;
+  margin: 10px 0 0 0;
+  font-size: 3.2rem;
+  font-weight: 800;
+  text-shadow: 3px 3px 0px #1e1e1e;
+  letter-spacing: 1px;
+}
+
+.savings-display-text {
+  text-align: center;
+  font-size: 2.6rem;
+  font-weight: bold;
+  margin: 0;
+  color: #1e1e1e;
+}
+
+.dashboard-invite-badge {
+  font-size: 1.4rem;
+  text-align: center;
+  color: #ff8fa3;
+  font-weight: bold;
+  margin-top: -5px;
+}
+
+/* Progress Tracker Styling */
+.progress-bar-wrapper {
+  width: 100%;
+  text-align: center;
+}
+
+.progress-bar-container {
+  border: 3px solid #1e1e1e;
+  border-radius: 16px;
+  background: #ffffff;
+  height: 24px;
+  overflow: hidden;
+  box-shadow: 4px 4px 0px #1e1e1e;
+}
+
+.progress-bar-fill {
+  background: #ff8fa3;
+  height: 100%;
+  transition: width 0.3s ease-in-out;
+}
+
+.progress-percent-label {
+  display: block;
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-top: 6px;
+  color: #1e1e1e;
+}
+
+/* Styled Retro Inputs & Dynamic Panels */
+.dashboard-action-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.dashboard-retro-input {
+  width: 100%;
+  padding: 12px;
+  background-color: #333333;
+  color: #ffffff;
+  border: 3px solid #1e1e1e;
+  border-radius: 16px;
+  font-size: 1.4rem;
+  box-sizing: border-box;
+  font-family: 'Caveat', cursive, sans-serif;
+  font-weight: bold;
+  text-align: center;
+}
+
+.dashboard-retro-input::placeholder {
+  color: #aaaaaa;
+}
+
+/* Buttons Transformation */
+.dashboard-feed-btn, .dashboard-withdraw-btn {
+  width: 100%;
+  padding: 12px;
+  border: 3px solid #1e1e1e;
+  border-radius: 16px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 4px 4px 0px #1e1e1e;
+  font-family: 'Caveat', cursive, sans-serif;
+  font-size: 1.6rem;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  color: #ffffff;
+}
+
+.dashboard-feed-btn {
+  background-color: #ff8fa3;
+}
+
+.dashboard-withdraw-btn {
+  background-color: #e63946;
+  margin-top: 4px;
+}
+
+.dashboard-feed-btn:active, .dashboard-withdraw-btn:active {
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px 0px #1e1e1e;
+}
+
+.withdrawal-border {
+  margin-top: 10px;
+  background: #fffdf9;
+  padding: 16px;
+  border-radius: 20px;
+  border: 3px dashed #1e1e1e;
+}
+
+.break-vault-title {
+  display: block;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.6rem;
+  color: #1e1e1e;
+}
