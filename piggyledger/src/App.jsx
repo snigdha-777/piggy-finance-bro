@@ -16,7 +16,7 @@ function App() {
   const { playClick } = useSound();
   
   const withSound = (action) => (...args) => {
-    playClick();
+    if (typeof playClick === "function") playClick();
     action(...args);
   };
 
@@ -54,7 +54,6 @@ function App() {
   // 🔥 Sane Wallet Influx Logic based on Identity Profile
   const handleAddWalletFunds = () => {
     if (!globalRole) {
-      // Trigger modal if role isn't known yet
       setShowRoleModal(true);
       return;
     }
@@ -79,6 +78,7 @@ function App() {
 
   if (currentStep === "landing") return <LandingPage onStart={withSound(handleStartLanding)} />;
   if (currentStep === "type") return <ChooseType onSelectType={withSound(handleSelectType)} />;
+  
   if (currentStep === "create") {
     return (
       <CreatePiggy
@@ -86,6 +86,7 @@ function App() {
         piggyType={selectedType}
         globalRole={globalRole}
         setGlobalRole={setGlobalRole}
+        playClick={playClick}
       />
     );
   }
@@ -141,8 +142,8 @@ function App() {
               <h2 style={{ fontSize: "1.8rem", margin: "0 0 10px 0" }}>Who Are You?</h2>
               <p style={{ fontSize: "1.2rem", marginBottom: "20px" }}>Identify your framework workspace clearance role to process funds injection:</p>
               <div style={{ display: "flex", gap: "12px" }}>
-                <button className="popup-primary-btn" style={{ flex: 1, padding: "12px" }} onClick={() => selectInitialRole("parent")}>Adult 👑</button>
-                <button className="popup-secondary-btn" style={{ flex: 1, padding: "12px", background: "#f1a7b4" }} onClick={() => selectInitialRole("child")}>Child 🧸</button>
+                <button className="popup-primary-btn" style={{ flex: 1, padding: "12px" }} onClick={withSound(() => selectInitialRole("parent"))}>Adult 👑</button>
+                <button className="popup-secondary-btn" style={{ flex: 1, padding: "12px", background: "#f1a7b4" }} onClick={withSound(() => selectInitialRole("child"))}>Child 🧸</button>
               </div>
             </div>
           </div>
@@ -163,6 +164,7 @@ function App() {
               piggyType={selectedType}
               globalWallet={globalWallet}
               setGlobalWallet={setGlobalWallet}
+              playClick={playClick} /* 🔥 FIX: Passed the down-streamed audio handler */
               onUpdatePiggy={(updatedData) => {
                 const updatedList = [...piggies];
                 updatedList[activePiggyIndex] = updatedData;

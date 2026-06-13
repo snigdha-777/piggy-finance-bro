@@ -6,7 +6,8 @@ function Dashboard({
   globalRole,
   globalWallet,
   setGlobalWallet,
-  onUpdatePiggy
+  onUpdatePiggy,
+  playClick // Passed down correctly from App.jsx
 }) {
   const [depositAmount, setDepositAmount] = useState("");
   const [depositNote, setDepositNote] = useState("");
@@ -24,6 +25,9 @@ function Dashboard({
       alert("Not enough money in wallet! 💸");
       return;
     }
+
+    // 🔊 Trigger the click/feed sound effect!
+    if (typeof playClick === "function") playClick();
 
     const formattedDate = new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "2-digit", year: "numeric" });
     const formattedTime = new Date().toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
@@ -60,7 +64,10 @@ function Dashboard({
 
     if (piggy.type !== "Family") {
       const confirmSolo = window.confirm(`Are you sure you want to withdraw ₹${amount}?`);
-      if (confirmSolo) finalizeWithdrawal(amount);
+      if (confirmSolo) {
+        if (typeof playClick === "function") playClick();
+        finalizeWithdrawal(amount);
+      }
       return;
     }
 
@@ -80,11 +87,13 @@ function Dashboard({
 
       if (allApproved) {
         alert("🎉 Excellent! All contributors voted YES. Processing funds transfer...");
+        if (typeof playClick === "function") playClick();
         finalizeWithdrawal(amount);
       } else {
         alert("❌ Withdrawal Denied! Consensus was not reached.");
       }
     } else {
+      if (typeof playClick === "function") playClick();
       finalizeWithdrawal(amount);
     }
   };

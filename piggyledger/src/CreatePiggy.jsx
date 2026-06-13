@@ -1,7 +1,13 @@
 import { useState } from "react";
 import "./CreatePiggy.css";
 
-function CreatePiggy({ setPiggy, piggyType, globalRole, setGlobalRole }) {
+function CreatePiggy({ 
+  setPiggy, 
+  piggyType, 
+  globalRole,       // Added missing prop so localRole can use it
+  setGlobalRole, 
+  playClick 
+}) {
   const [piggyName, setPiggyName] = useState("");
   const [goal, setGoal] = useState("");
   const [date, setDate] = useState(""); 
@@ -12,22 +18,26 @@ function CreatePiggy({ setPiggy, piggyType, globalRole, setGlobalRole }) {
   const [localRole, setLocalRole] = useState(globalRole || "parent");
 
   function addMember() {
-    if (!member.trim()) return;
+    const cleanMember = member.trim();
+    if (!cleanMember) return;
 
     if (piggyType === "Friends" && members.length >= 6) {
       alert("You can add a maximum of 6 friends!");
       return;
     }
 
-    if (members.includes(member.trim())) {
+    if (members.includes(cleanMember)) {
       alert("Member already added!");
       return;
     }
-    setMembers([...members, member.trim()]);
+
+    if (typeof playClick === "function") playClick();
+    setMembers([...members, cleanMember]);
     setMember("");
   }
 
   function removeMember(indexToRemove) {
+    if (typeof playClick === "function") playClick();
     setMembers(members.filter((_, idx) => idx !== indexToRemove));
   }
 
@@ -36,7 +46,8 @@ function CreatePiggy({ setPiggy, piggyType, globalRole, setGlobalRole }) {
       alert("Please enter a valid family invite code!");
       return;
     }
-    // Set global identity state definitively on execution completion
+    
+    if (typeof playClick === "function") playClick();
     setGlobalRole("child");
     setPiggy({
       name: "Family Vault",
@@ -68,11 +79,11 @@ function CreatePiggy({ setPiggy, piggyType, globalRole, setGlobalRole }) {
     const isGroup = piggyType === "Family" || piggyType === "Friends";
     const generatedCode = isGroup ? "PIGGY-" + Math.floor(1000 + Math.random() * 9000) : null;
     
-    // Commit the locked choice globally now that workspace is validated
+    if (typeof playClick === "function") playClick();
     setGlobalRole(isFamily ? localRole : "parent");
 
     setPiggy({
-      name: piggyName,
+      name: piggyName.trim(),
       goal: Number(goal),
       savedAmount: 0,
       date: date, 
@@ -89,7 +100,6 @@ function CreatePiggy({ setPiggy, piggyType, globalRole, setGlobalRole }) {
       <div className="create-box">
         <h1 className="create-title">Create Your Piggy</h1>
 
-        {/* FIXED: Removed the block wrapping so role buttons are accessible all the time */}
         {piggyType === "Family" && (
           <div className="role-selection-card">
             <span className="role-title">Select Your Family Role:</span>
@@ -97,14 +107,14 @@ function CreatePiggy({ setPiggy, piggyType, globalRole, setGlobalRole }) {
               <button
                 type="button"
                 className={`role-toggle-btn ${localRole === "parent" ? "active" : ""}`}
-                onClick={() => setLocalRole("parent")}
+                onClick={() => { if (typeof playClick === "function") playClick(); setLocalRole("parent"); }}
               >
                 Parent 👑
               </button>
               <button
                 type="button"
                 className={`role-toggle-btn ${localRole === "child" ? "active" : ""}`}
-                onClick={() => setLocalRole("child")}
+                onClick={() => { if (typeof playClick === "function") playClick(); setLocalRole("child"); }}
               >
                 Child 🧸
               </button>
@@ -120,7 +130,8 @@ function CreatePiggy({ setPiggy, piggyType, globalRole, setGlobalRole }) {
               placeholder="Enter Invite Code (e.g., PIGGY-1234)"
               value={inviteCodeInput}
               onChange={(e) => setInviteCodeInput(e.target.value)}
-              className="code-input"
+              className="dashboard-retro-input"
+              style={{ textAlign: 'center', marginBottom: '10px' }}
             />
             <button type="button" className="create-btn" onClick={handleJoinCode}>Join Family Goal</button>
           </div>
@@ -154,15 +165,15 @@ function CreatePiggy({ setPiggy, piggyType, globalRole, setGlobalRole }) {
                 {members.length > 0 && (
                   <div className="members-list">
                     {members.map((m, i) => (
-                      <p key={i} className="member-tag" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                      <div key={i} className="member-tag">
                         <span>👤 {m}</span>
                         <span 
                           onClick={() => removeMember(i)} 
-                          style={{ cursor: "pointer", color: "#ff8fa3", fontWeight: "bold", marginLeft: "10px" }}
+                          style={{ cursor: "pointer", color: "#ff8fa3", fontWeight: "bold" }}
                         >
                           ×
                         </span>
-                      </p>
+                      </div>
                     ))}
                   </div>
                 )}
