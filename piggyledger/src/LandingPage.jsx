@@ -2,7 +2,12 @@ import { useEffect, useState } from "react";
 import "./LandingPage.css";
 import pigGif from "./assets/pig.gif";
 
-// 👑 FIX: Destructure onStart right here in the function parameters!
+// Import your custom desktop image assets
+import pigicon from "./assets/pigicon.png";
+import passbookicon from "./assets/passbookicon.png";
+import lettericon from "./assets/lettericon.png";
+import taskbarImg from "./assets/taskbar.jpeg"; 
+
 function LandingPage({ onStart }) {
   const [showDesktop, setShowDesktop] = useState(false);
   const [messageIndex, setMessageIndex] = useState(0);
@@ -60,15 +65,15 @@ function LandingPage({ onStart }) {
       <div className={`desktop ${showDesktop ? "show" : ""}`}>
         <div className="icons">
           <div className="icon">
-            🐷
+            <img src={pigicon} alt="My Piggy" className="desktop-icon-img" />
             <span>My Piggy</span>
           </div>
           <div className="icon">
-            📒
+            <img src={passbookicon} alt="Passbook" className="desktop-icon-img" />
             <span>Passbook</span>
           </div>
           <div className="icon">
-            ✉️
+            <img src={lettericon} alt="Letters" className="desktop-icon-img" />
             <span>Letters</span>
           </div>
         </div>
@@ -81,11 +86,15 @@ function LandingPage({ onStart }) {
             <h1>Turn Saving Into A Story</h1>
             <p>Save together. Grow together.</p>
             
-            {/* This will now execute perfectly without throwing an error! */}
             <button type="button" onClick={onStart}>
               Start Saving
             </button>
           </div>
+        </div>
+
+        {/* 🖥️ SYSTEM TASKBAR - IMAGE ONLY */}
+        <div className="system-taskbar-wrapper">
+          <img src={taskbarImg} alt="System Taskbar" className="taskbar-background-image" />
         </div>
       </div>
     </>

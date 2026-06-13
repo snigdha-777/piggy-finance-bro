@@ -19,10 +19,9 @@
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center;
-  /* Top padding prevents elements from overlapping the retro window title menu bar */
   padding: 130px 50px 50px 50px;
   width: 100%;
-  max-width: 520px; /* Reduced to look cleaner inside the retro window frame */
+  max-width: 520px;
   box-sizing: border-box;
   gap: 16px;
 }
@@ -58,12 +57,63 @@
   color: #aaaaaa;
 }
 
-/* Fixes calendar icon style to blend nicely with dark theme inputs */
 .create-box input[type="date"]::-webkit-calendar-picker-indicator {
   filter: invert(1);
   cursor: pointer;
 }
 
+/* 🎰 Retro Role Selector Framework Elements */
+.role-selection-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #ffffff;
+  border: 3px solid #1e1e1e;
+  border-radius: 16px;
+  padding: 12px;
+  box-shadow: 4px 4px 0px #1e1e1e;
+  text-align: center;
+}
+
+.role-title {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: #1e1e1e;
+}
+
+.role-btn-group {
+  display: flex;
+  gap: 12px;
+}
+
+.role-toggle-btn {
+  flex: 1;
+  padding: 8px;
+  background: #fffdf9;
+  border: 3px solid #1e1e1e;
+  border-radius: 12px;
+  font-family: 'Caveat', cursive, sans-serif;
+  font-size: 1.4rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.1s ease;
+}
+
+.role-toggle-btn.active {
+  background: #ff8fa3;
+  color: #ffffff;
+  transform: translate(2px, 2px);
+  box-shadow: inset 2px 2px 0px rgba(0, 0, 0, 0.2);
+}
+
+.role-notice-text {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #ff4a4a;
+}
+
+/* Members UI Area Layouts */
 .member-input-group {
   display: flex;
   width: 100%;
