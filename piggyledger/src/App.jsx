@@ -12,15 +12,15 @@ import taskbarImg from "./assets/taskbar.jpeg";
 
 function App() {
   const [currentStep, setCurrentStep] = useState("landing");
-  const [piggies, setPiggies] = useState([]); 
+  const [piggies, setPiggies] = useState([]);
   const [activePiggyIndex, setActivePiggyIndex] = useState(null);
-  const [globalWallet, setGlobalWallet] = useState(0); 
-  const [lockedFamilyRole, setLockedFamilyRole] = useState(null); 
+  const [globalWallet, setGlobalWallet] = useState(0);
+  const [lockedFamilyRole, setLockedFamilyRole] = useState(null);
   const [selectedType, setSelectedType] = useState("");
   const [desktopWindow, setDesktopWindow] = useState("desktop");
 
   const handleStartLanding = () => setCurrentStep("type");
-  
+
   const handleSelectType = (type) => {
     setSelectedType(type);
     setCurrentStep("create");
@@ -31,7 +31,7 @@ function App() {
       setLockedFamilyRole(newPiggy.role);
     }
     setPiggies([...piggies, newPiggy]);
-    setActivePiggyIndex(piggies.length); 
+    setActivePiggyIndex(piggies.length);
     setCurrentStep("dashboard");
     setDesktopWindow("desktop");
   };
@@ -45,9 +45,9 @@ function App() {
   if (currentStep === "type") return <ChooseType onSelectType={handleSelectType} />;
   if (currentStep === "create") {
     return (
-      <CreatePiggy 
-        setPiggy={handleCreateComplete} 
-        piggyType={selectedType} 
+      <CreatePiggy
+        setPiggy={handleCreateComplete}
+        piggyType={selectedType}
         lockedFamilyRole={lockedFamilyRole}
         setGlobalRole={setLockedFamilyRole}
       />
@@ -58,29 +58,40 @@ function App() {
 
   return (
     <div className="desktop-environment">
-      
-      {/* 🖥️ DESKTOP SHORTCUTS WITH CUSTOM IMAGES */}
+
+      {/* 🖥️ DESKTOP SHORTCUTS */}
       <div className="icons">
-        <div className={`icon ${desktopWindow === "my-piggy-list" ? "active-shortcut" : ""}`} onClick={() => setDesktopWindow("my-piggy-list")}>
+        <div
+          className={`icon ${desktopWindow === "my-piggy-list" ? "active-shortcut" : ""}`}
+          onClick={() => setDesktopWindow("my-piggy-list")}
+        >
           <img src={pigicon} alt="My Piggy" className="desktop-icon-img" />
           <span>My Piggy</span>
         </div>
-        <div className={`icon ${desktopWindow === "passbook" ? "active-shortcut" : ""}`} onClick={() => setDesktopWindow("passbook")}>
+
+        <div
+          className={`icon ${desktopWindow === "passbook" ? "active-shortcut" : ""}`}
+          onClick={() => setDesktopWindow("passbook")}
+        >
           <img src={passbookicon} alt="Passbook" className="desktop-icon-img" />
           <span>Passbook</span>
         </div>
-        <div className={`icon ${desktopWindow === "letters" ? "active-shortcut" : ""}`} onClick={() => setDesktopWindow("letters")}>
+
+        <div
+          className={`icon ${desktopWindow === "letters" ? "active-shortcut" : ""}`}
+          onClick={() => setDesktopWindow("letters")}
+        >
           <img src={lettericon} alt="Letters" className="desktop-icon-img" />
           <span>Letters</span>
         </div>
-        
-        {/* Wallet Display Monitor */}
+
+        {/* Wallet Monitor */}
         <div className="wallet-monitor">
-          👛 Wallet:<br/>₹{globalWallet}
+          👛 Wallet:<br />₹{globalWallet}
         </div>
       </div>
 
-      {/* 🎛️ DASHBOARD VIEW CONTAINER */}
+      {/* 🎛️ DASHBOARD */}
       {desktopWindow === "desktop" && activePiggy && (
         <div className="retro-window-popup window-entry-bounce core-dashboard-window">
           <div className="window-titlebar">
@@ -88,8 +99,8 @@ function App() {
             <div className="titlebar-controls" onClick={() => setDesktopWindow("my-piggy-list")}>🗔</div>
           </div>
           <div className="window-body-content">
-            <Dashboard 
-              piggy={activePiggy} 
+            <Dashboard
+              piggy={activePiggy}
               globalRole={lockedFamilyRole}
               piggyType={selectedType}
               onUpdatePiggy={(updatedData) => {
@@ -102,7 +113,7 @@ function App() {
         </div>
       )}
 
-      {/* 🐷 APP WINDOW: My Piggy Directory */}
+      {/* 🐷 MY PIGGY LIST */}
       {desktopWindow === "my-piggy-list" && (
         <div className="retro-window-popup window-entry-bounce">
           <div className="window-titlebar">
@@ -110,11 +121,21 @@ function App() {
             <div className="titlebar-controls" onClick={() => setDesktopWindow("desktop")}>×</div>
           </div>
           <div className="window-body-content">
-            <h2>Active Passbooks</h2>
+            <h2>🐷 Active Passbooks</h2>
             <div className="popup-list-container">
-              {piggies.length === 0 && <p className="empty-notice">No active saving workspaces.</p>}
+              {piggies.length === 0 && (
+                <p className="empty-notice">No active saving workspaces.</p>
+              )}
               {piggies.map((p, idx) => (
-                <button key={idx} onClick={() => { setActivePiggyIndex(idx); setSelectedType(p.type); setDesktopWindow("desktop"); }} className="popup-list-btn">
+                <button
+                  key={idx}
+                  onClick={() => {
+                    setActivePiggyIndex(idx);
+                    setSelectedType(p.type);
+                    setDesktopWindow("desktop");
+                  }}
+                  className="popup-list-btn"
+                >
                   🎯 {p.name} ({p.type}) — ₹{p.savedAmount}/₹{p.goal}
                 </button>
               ))}
@@ -127,7 +148,7 @@ function App() {
         </div>
       )}
 
-      {/* 📒 APP WINDOW: Passbook Ledger Logs */}
+      {/* 📒 PASSBOOK */}
       {desktopWindow === "passbook" && (
         <div className="retro-window-popup window-entry-bounce">
           <div className="window-titlebar">
@@ -135,25 +156,30 @@ function App() {
             <div className="titlebar-controls" onClick={() => setDesktopWindow("desktop")}>×</div>
           </div>
           <div className="window-body-content">
-            <h2>Transaction Passbook</h2>
-            <div className="popup-list-container italic-scroller">
+            <h2>📒 Transaction Passbook</h2>
+            <div className="popup-list-container">
               {(!activePiggy || !activePiggy.logs || activePiggy.logs.length === 0) ? (
                 <p className="empty-notice">No transactions logged yet.</p>
               ) : (
                 activePiggy.logs.map((log, i) => (
                   <div key={i} className="ledger-log-row">
-                    <strong>[{log.timestamp}]</strong> <span className="user-tag">{log.user}:</span> {log.type === 'deposit' ? '🪙 Added' : '🔓 Requested'} <span className="pink-text">₹{log.amount}</span>
+                    <strong>[{log.timestamp}]</strong>{" "}
+                    <span className="user-tag">{log.user}:</span>{" "}
+                    {log.type === "deposit" ? "🪙 Added" : "🔓 Requested"}{" "}
+                    <span className="pink-text">₹{log.amount}</span>
                     {log.note && <p className="log-note-text">💬 Note: "{log.note}"</p>}
                   </div>
                 ))
               )}
             </div>
-            <button onClick={() => setDesktopWindow("desktop")} className="popup-close-block-btn">Back to Desktop</button>
+            <button onClick={() => setDesktopWindow("desktop")} className="popup-close-block-btn">
+              Back to Desktop
+            </button>
           </div>
         </div>
       )}
 
-      {/* ✉️ APP WINDOW: Monthly AI Report */}
+      {/* ✉️ AI LETTERS */}
       {desktopWindow === "letters" && (
         <div className="retro-window-popup window-entry-bounce">
           <div className="window-titlebar">
@@ -161,26 +187,35 @@ function App() {
             <div className="titlebar-controls" onClick={() => setDesktopWindow("desktop")}>×</div>
           </div>
           <div className="window-body-content">
-            <h2>AI Story Passbook Insights</h2>
+            <h2>✉️ Story Passbook Insights</h2>
             {activePiggy ? (
               <div className="ai-letter-body">
                 <p><strong>To: The Saver of {activePiggy.name} 🐷</strong></p>
-                <p style={{ marginTop: "10px" }}>
-                  Oink! Your current progress is sitting at {((activePiggy.savedAmount / activePiggy.goal) * 100).toFixed(1)}%. 
-                  {activePiggy.savedAmount === 0 
-                    ? " My belly is empty and cold! Drop some coins down the hatch so I can stretch my wings!" 
-                    : " The passbook scales are ticking! Keep feeding this goal pace to guarantee a successful harvest."}
+                <p style={{ marginTop: "12px" }}>
+                  Oink! Your current progress is sitting at{" "}
+                  <span style={{ color: "#d6005c", fontWeight: 900 }}>
+                    {((activePiggy.savedAmount / activePiggy.goal) * 100).toFixed(1)}%
+                  </span>.{" "}
+                  {activePiggy.savedAmount === 0
+                    ? "My belly is empty and cold! Drop some coins down the hatch so I can stretch my wings!"
+                    : "The passbook scales are ticking! Keep feeding this goal pace to guarantee a successful harvest."}
                 </p>
               </div>
             ) : (
               <p className="empty-notice">Connect a workspace profile to generate letters.</p>
             )}
-            <button onClick={() => setDesktopWindow("desktop")} className="popup-close-block-btn" style={{ marginTop: "15px" }}>Close Window</button>
+            <button
+              onClick={() => setDesktopWindow("desktop")}
+              className="popup-close-block-btn"
+              style={{ marginTop: "16px" }}
+            >
+              Close Window
+            </button>
           </div>
         </div>
       )}
 
-      {/* 🖥️ SYSTEM TASKBAR */}
+      {/* 🖥️ TASKBAR */}
       <div className="system-taskbar-wrapper">
         <img src={taskbarImg} alt="System Taskbar" className="taskbar-background-image" />
       </div>
