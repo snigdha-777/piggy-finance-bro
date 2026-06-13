@@ -1,3 +1,4 @@
+// src/App.jsx
 import { useState } from "react";
 import LandingPage from "./LandingPage";
 import ChooseType from "./ChooseType";
@@ -91,12 +92,12 @@ function App() {
         </div>
       </div>
 
-      {/* 🎛️ DASHBOARD */}
+      {/* 🎛️ DASHBOARD VIEW */}
       {desktopWindow === "desktop" && activePiggy && (
-        <div className="retro-window-popup window-entry-bounce core-dashboard-window">
+        <div className="retro-window-popup window-entry-bounce">
           <div className="window-titlebar">
-            <span className="titlebar-text">{activePiggy.name}.exe — Dashboard</span>
-            <div className="titlebar-controls" onClick={() => setDesktopWindow("my-piggy-list")}>🗔</div>
+            <span className="titlebar-text">{activePiggy.name}.exe</span>
+            <div className="titlebar-controls" onClick={() => setDesktopWindow("my-piggy-list")}>×</div>
           </div>
           <div className="window-body-content">
             <Dashboard
@@ -113,7 +114,7 @@ function App() {
         </div>
       )}
 
-      {/* 🐷 MY PIGGY LIST */}
+      {/* 🐷 MY PIGGY LIST WINDOW */}
       {desktopWindow === "my-piggy-list" && (
         <div className="retro-window-popup window-entry-bounce">
           <div className="window-titlebar">
@@ -121,7 +122,7 @@ function App() {
             <div className="titlebar-controls" onClick={() => setDesktopWindow("desktop")}>×</div>
           </div>
           <div className="window-body-content">
-            <h2>🐷 Active Passbooks</h2>
+            <h1>Active Passbooks</h1>
             <div className="popup-list-container">
               {piggies.length === 0 && (
                 <p className="empty-notice">No active saving workspaces.</p>
@@ -136,7 +137,7 @@ function App() {
                   }}
                   className="popup-list-btn"
                 >
-                  🎯 {p.name} ({p.type}) — ₹{p.savedAmount}/₹{p.goal}
+                  🐷 {p.name} ({p.type}) — ₹{p.savedAmount} / ₹{p.goal}
                 </button>
               ))}
             </div>
@@ -148,7 +149,7 @@ function App() {
         </div>
       )}
 
-      {/* 📒 PASSBOOK */}
+      {/* 📒 PASSBOOK LOG WINDOW */}
       {desktopWindow === "passbook" && (
         <div className="retro-window-popup window-entry-bounce">
           <div className="window-titlebar">
@@ -156,7 +157,7 @@ function App() {
             <div className="titlebar-controls" onClick={() => setDesktopWindow("desktop")}>×</div>
           </div>
           <div className="window-body-content">
-            <h2>📒 Transaction Passbook</h2>
+            <h1>Transaction Passbook</h1>
             <div className="popup-list-container">
               {(!activePiggy || !activePiggy.logs || activePiggy.logs.length === 0) ? (
                 <p className="empty-notice">No transactions logged yet.</p>
@@ -179,7 +180,7 @@ function App() {
         </div>
       )}
 
-      {/* ✉️ AI LETTERS */}
+      {/* ✉️ AI LETTERS WINDOW */}
       {desktopWindow === "letters" && (
         <div className="retro-window-popup window-entry-bounce">
           <div className="window-titlebar">
@@ -187,7 +188,7 @@ function App() {
             <div className="titlebar-controls" onClick={() => setDesktopWindow("desktop")}>×</div>
           </div>
           <div className="window-body-content">
-            <h2>✉️ Story Passbook Insights</h2>
+            <h1>Story Insights</h1>
             {activePiggy ? (
               <div className="ai-letter-body">
                 <p><strong>To: The Saver of {activePiggy.name} 🐷</strong></p>
@@ -204,11 +205,7 @@ function App() {
             ) : (
               <p className="empty-notice">Connect a workspace profile to generate letters.</p>
             )}
-            <button
-              onClick={() => setDesktopWindow("desktop")}
-              className="popup-close-block-btn"
-              style={{ marginTop: "16px" }}
-            >
+            <button onClick={() => setDesktopWindow("desktop")} className="popup-close-block-btn" style={{ marginTop: "16px" }}>
               Close Window
             </button>
           </div>

@@ -40,7 +40,7 @@ function Dashboard({ piggy, globalRole, piggyType, onUpdatePiggy }) {
   const progressPercent = Math.min((((piggy.savedAmount || 0) / piggy.goal) * 100), 100);
 
   return (
-    <div className="dashboard-window-content">
+    <div className="dashboard-content-wrapper">
       <h1 className="dashboard-title">{piggy.name}</h1>
       
       {piggy.inviteCode && (

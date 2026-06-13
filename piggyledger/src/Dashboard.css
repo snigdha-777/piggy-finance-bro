@@ -1,24 +1,43 @@
-/* Append this clean spacing to your Dashboard.css file */
-.dashboard-window-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.dashboard-window {
   width: 100%;
-  gap: 16px;
+  max-width: 680px;
+  background: #fffdf9;
+  border: 4px solid #1e1e1e;
+  box-shadow: 12px 12px 0px #1e1e1e;
+  border-radius: 24px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
   font-family: 'Caveat', cursive, sans-serif;
 }
+
+.dashboard-content {
+  padding: 40px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+}
+
 .dashboard-title {
   font-size: 3.5rem;
   color: #ff8fa3;
   margin: 0;
   text-shadow: 2px 2px 0px #1e1e1e;
+  line-height: 1.1;
 }
+
 .savings-display {
   font-size: 2.2rem;
   font-weight: 900;
   margin: 0;
   color: #1e1e1e;
 }
+
 .invite-badge {
   background: #fffdf0;
   border: 2px solid #1e1e1e;
@@ -27,38 +46,105 @@
   font-size: 1.2rem;
   font-weight: bold;
 }
+
 .invite-badge span {
   color: #ff8fa3;
   font-weight: 900;
 }
+
+.progress-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.progress-container {
+  width: 100%;
+  height: 28px;
+  border: 4px solid #1e1e1e;
+  background: #e0e0e0;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 4px 4px 0px #1e1e1e;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(
+    45deg,
+    #ff8fa3 25%,
+    #ffb3c1 25%,
+    #ffb3c1 50%,
+    #ff8fa3 50%,
+    #ff8fa3 75%,
+    #ffb3c1 75%,
+    #ffb3c1
+  );
+  background-size: 40px 40px;
+  border-radius: 16px;
+  transition: width 0.4s ease-out;
+  animation: progressStripes 1.5s linear infinite;
+}
+
+@keyframes progressStripes {
+  from { background-position: 0 0; }
+  to { background-position: 40px 0; }
+}
+
 .percent-text {
   font-size: 1.4rem;
   font-weight: bold;
+  color: #1e1e1e;
 }
+
+.deposit-panel {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 16px;
+  align-items: center;
+  margin-top: 10px;
+}
+
 .dashboard-input {
   width: 100%;
-  padding: 10px;
+  max-width: 400px;
+  padding: 12px;
   border: 3px solid #1e1e1e;
-  border-radius: 12px;
+  border-radius: 16px;
   text-align: center;
   font-size: 1.3rem;
   font-family: 'Caveat', cursive, sans-serif;
   font-weight: bold;
+  outline: none;
+  background: #fffdf9;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
+
+.dashboard-input:focus {
+  border-color: #ff8fa3;
+  box-shadow: 3px 3px 0px #1e1e1e;
+}
+
 .dashboard-btn {
+  width: 100%;
+  max-width: 280px;
   padding: 12px;
   background: #ff8fa3;
   color: white;
   border: 3px solid #1e1e1e;
-  border-radius: 12px;
-  font-weight: bold;
-  font-size: 1.4rem;
+  border-radius: 16px;
+  font-weight: 900;
+  font-size: 1.6rem;
   cursor: pointer;
   box-shadow: 4px 4px 0px #1e1e1e;
   font-family: 'Caveat', cursive, sans-serif;
-  transition: transform 0.1s;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
+
 .dashboard-btn:active {
-  transform: translate(2px, 2px);
-  box-shadow: 2px 2px 0px #1e1e1e;
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px 0px #1e1e1e;
 }
