@@ -1,7 +1,8 @@
 import { useState } from "react";
 import "./CreatePiggy.css";
 
-function CreatePiggy({ setPiggy, piggyType, lockedFamilyRole, setGlobalRole }) {
+// 1. Add playClick to the destuctured props
+function CreatePiggy({ setPiggy, piggyType, lockedFamilyRole, setGlobalRole, playClick }) {
   const [piggyName, setPiggyName] = useState("");
   const [goal, setGoal] = useState("");
   const [date, setDate] = useState(""); 
@@ -13,6 +14,7 @@ function CreatePiggy({ setPiggy, piggyType, lockedFamilyRole, setGlobalRole }) {
 
   function addMember() {
     if (!member.trim()) return;
+    playClick(); // Play sound on Add
     setMembers([...members, member]);
     setMember("");
   }
@@ -22,6 +24,7 @@ function CreatePiggy({ setPiggy, piggyType, lockedFamilyRole, setGlobalRole }) {
       alert("Please enter a valid family invite code!");
       return;
     }
+    playClick(); // 2. Play sound here
     setGlobalRole("child");
     setPiggy({
       name: "Family Vault",
@@ -44,6 +47,7 @@ function CreatePiggy({ setPiggy, piggyType, lockedFamilyRole, setGlobalRole }) {
       return;
     }
 
+    playClick(); // 3. Play sound here
     const generatedCode = piggyType === "Family" ? "PIGGY-" + Math.floor(1000 + Math.random() * 9000) : null;
     setGlobalRole(piggyType === "Family" ? familyRole : "owner");
 
@@ -73,14 +77,14 @@ function CreatePiggy({ setPiggy, piggyType, lockedFamilyRole, setGlobalRole }) {
                 <button
                   type="button"
                   className={`role-toggle-btn ${familyRole === "parent" ? "active" : ""}`}
-                  onClick={() => setFamilyRole("parent")}
+                  onClick={() => { playClick(); setFamilyRole("parent"); }} // Sound on click
                 >
                   Parent 👑
                 </button>
                 <button
                   type="button"
                   className={`role-toggle-btn ${familyRole === "child" ? "active" : ""}`}
-                  onClick={() => setFamilyRole("child")}
+                  onClick={() => { playClick(); setFamilyRole("child"); }} // Sound on click
                 >
                   Child 🧸
                 </button>

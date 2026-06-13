@@ -1,13 +1,17 @@
 import { useState } from "react";
 import "./Dashboard.css";
 
-function Dashboard({ piggy, globalRole, piggyType, onUpdatePiggy }) {
+// 1. Destructure playClick from props
+function Dashboard({ piggy, globalRole, piggyType, onUpdatePiggy, playClick }) {
   const [depositAmount, setDepositAmount] = useState("");
   const [depositNote, setDepositNote] = useState("");
   const currentUserIdentity = globalRole === "parent" ? "Parent 👑" : globalRole === "child" ? "Child 🧸" : "Owner 👤";
 
   const handleDeposit = () => {
     if (!depositAmount || Number(depositAmount) <= 0) return;
+
+    // 2. Trigger the sound here
+    playClick();
 
     const formattedDate = new Date().toLocaleDateString("en-GB", {
       day: "2-digit",

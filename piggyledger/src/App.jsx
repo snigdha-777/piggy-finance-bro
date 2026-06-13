@@ -58,6 +58,7 @@ function App() {
       <CreatePiggy
         setPiggy={handleCreateComplete}
         piggyType={selectedType}
+        playClick={playClick}
         lockedFamilyRole={lockedFamilyRole}
         setGlobalRole={setLockedFamilyRole}
       />
