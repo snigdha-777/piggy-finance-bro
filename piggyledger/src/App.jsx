@@ -7,7 +7,22 @@ function App() {
   const [amount, setAmount] = useState("");
   const [created, setCreated] = useState(false);
 
+  // Future: store multiple piggies
+  const [piggies, setPiggies] = useState([]);
+
+  const progress = goal
+    ? Math.round((saved / goal) * 100)
+    : 0;
+
   function createPiggy() {
+    const newPiggy = {
+      id: Date.now(),
+      name: piggyName,
+      goal: Number(goal),
+      saved: 0,
+    };
+
+    setPiggies([...piggies, newPiggy]);
     setCreated(true);
   }
 
@@ -31,7 +46,8 @@ function App() {
           onChange={(e) => setPiggyName(e.target.value)}
         />
 
-        <br /><br />
+        <br />
+        <br />
 
         <input
           type="number"
@@ -40,7 +56,8 @@ function App() {
           onChange={(e) => setGoal(e.target.value)}
         />
 
-        <br /><br />
+        <br />
+        <br />
 
         <button onClick={createPiggy}>
           Create Piggy
@@ -59,6 +76,27 @@ function App() {
         ₹{saved} / ₹{goal}
       </p>
 
+      <p>{progress}% Complete</p>
+
+      <div
+        style={{
+          width: "300px",
+          height: "20px",
+          backgroundColor: "#ddd",
+          margin: "20px auto",
+          borderRadius: "10px",
+        }}
+      >
+        <div
+          style={{
+            width: `${progress}%`,
+            height: "100%",
+            backgroundColor: "green",
+            borderRadius: "10px",
+          }}
+        />
+      </div>
+
       <input
         type="number"
         placeholder="Enter Amount"
@@ -66,7 +104,8 @@ function App() {
         onChange={(e) => setAmount(e.target.value)}
       />
 
-      <br /><br />
+      <br />
+      <br />
 
       <button onClick={addMoney}>
         Add Money
