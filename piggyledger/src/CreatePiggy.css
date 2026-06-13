@@ -1,43 +1,42 @@
-/* Container holding the card */
 .create-page {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #fce4ec; /* Matches your light pink outer background */
+  background-image: url("./assets/image_e0dcc2.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
-/* The card container */
 .create-box {
   display: flex;
   flex-direction: column;
-  background-color: #fffdf9; /* Card background color */
-  padding: 40px;
-  border-radius: 16px;
-  box-shadow: 6px 6px 0px #1e1e1e; /* Neo-brutalism block shadow */
-  border: 2px solid #1e1e1e;
+  background-color: #fffdf9;
+  padding: 60px 40px 40px 40px;
   width: 100%;
-  max-width: 500px; /* Restricts the card layout from stretching too wide */
+  max-width: 500px;
   box-sizing: border-box;
-  gap: 16px; /* Uniform spacing between elements */
+  gap: 16px;
+  border: 30px solid transparent;
+  border-image: url("./assets/image_e12f16.png") 120 40 40 40 stretch;
+  box-shadow: 6px 6px 0px #1e1e1e;
 }
 
-/* Fixes the low-contrast title visibility */
 .create-title {
-  color: #ff8fa3; /* Vibrant, dark pink tone for readability */
+  color: #ff8fa3;
   text-align: center;
   margin-bottom: 10px;
   font-size: 2rem;
   font-weight: 800;
 }
 
-/* Forces all form field dialogue boxes to align to the same structural width */
 .create-box input[type="text"],
 .create-box input[type="number"],
 .create-box input[type="date"] {
   width: 100%;
   padding: 14px;
-  background-color: #333333; /* Dark fill matching your theme */
+  background-color: #333333;
   color: #ffffff;
   border: 2px solid #1e1e1e;
   border-radius: 12px;
@@ -45,26 +44,22 @@
   box-sizing: border-box;
 }
 
-/* Setup custom placeholder styling for legibility */
 .create-box input::placeholder {
   color: #aaaaaa;
 }
 
-/* Aligns the member input field horizontally with its adjacent Add button */
 .member-input-group {
   display: flex;
   width: 100%;
   gap: 12px;
 }
 
-/* Permits the specific member input to expand alongside its action button */
 .member-input-group input {
   flex: 1;
 }
 
-/* Button UI styling definitions */
 .add-btn, .create-btn {
-  background-color: #f8bbd0; /* Classic pink button color match */
+  background-color: #f8bbd0;
   color: #ffffff;
   border: 2px solid #1e1e1e;
   border-radius: 12px;
@@ -84,12 +79,10 @@
   font-size: 1.1rem;
 }
 
-/* Active click states */
 .add-btn:active, .create-btn:active {
   transform: scale(0.98);
 }
 
-/* Simple text container layout tracking members */
 .members-list {
   background: #f5f5f5;
   padding: 10px;
