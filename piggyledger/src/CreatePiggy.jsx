@@ -4,7 +4,7 @@ import "./CreatePiggy.css";
 function CreatePiggy({ setPiggy }) {
   const [piggyName, setPiggyName] = useState("");
   const [goal, setGoal] = useState("");
-  const [date, setDate] = useState(""); // Added state
+  const [date, setDate] = useState(""); 
   const [member, setMember] = useState("");
   const [members, setMembers] = useState([]);
 
@@ -18,7 +18,7 @@ function CreatePiggy({ setPiggy }) {
     const pigData = {
       name: piggyName,
       goal: goal,
-      date: date, // Added date to payload
+      date: date, 
       members: members,
     };
     setPiggy(pigData);
@@ -27,7 +27,6 @@ function CreatePiggy({ setPiggy }) {
   return (
     <div className="create-page">
       <div className="create-box">
-        {/* Updated heading styling class */}
         <h1 className="create-title">Create Your Piggy</h1>
 
         <input
@@ -65,7 +64,7 @@ function CreatePiggy({ setPiggy }) {
         {members.length > 0 && (
           <div className="members-list">
             {members.map((m, index) => (
-              <p key={index}>👤 {m}</p>
+              <p key={index} className="member-tag">👤 {m}</p>
             ))}
           </div>
         )}

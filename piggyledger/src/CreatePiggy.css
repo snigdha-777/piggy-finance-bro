@@ -1,51 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap');
+
 .create-page {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-image: url("./assets/image_e0dcc2.png");
+  background-image: url("./assets/download (4).jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  font-family: 'Caveat', cursive, sans-serif;
 }
 
 .create-box {
   display: flex;
   flex-direction: column;
-  background-color: #fffdf9;
-  padding: 60px 40px 40px 40px;
+  background-image: url("./assets/image_e12f16.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  /* Top padding prevents elements from overlapping the retro window title menu bar */
+  padding: 130px 50px 50px 50px;
   width: 100%;
-  max-width: 500px;
+  max-width: 520px; /* Reduced to look cleaner inside the retro window frame */
   box-sizing: border-box;
   gap: 16px;
-  border: 30px solid transparent;
-  border-image: url("./assets/image_e12f16.png") 120 40 40 40 stretch;
-  box-shadow: 6px 6px 0px #1e1e1e;
 }
 
 .create-title {
   color: #ff8fa3;
   text-align: center;
-  margin-bottom: 10px;
-  font-size: 2rem;
+  margin: 0 0 10px 0;
+  font-size: 3.2rem;
   font-weight: 800;
+  text-shadow: 3px 3px 0px #1e1e1e;
+  letter-spacing: 1px;
+  font-family: 'Caveat', cursive, sans-serif;
 }
 
 .create-box input[type="text"],
 .create-box input[type="number"],
 .create-box input[type="date"] {
   width: 100%;
-  padding: 14px;
+  padding: 12px;
   background-color: #333333;
   color: #ffffff;
-  border: 2px solid #1e1e1e;
-  border-radius: 12px;
-  font-size: 1rem;
+  border: 3px solid #1e1e1e;
+  border-radius: 16px;
+  font-size: 1.4rem;
   box-sizing: border-box;
+  font-family: 'Caveat', cursive, sans-serif;
+  font-weight: bold;
+  text-align: center;
 }
 
 .create-box input::placeholder {
   color: #aaaaaa;
+}
+
+/* Fixes calendar icon style to blend nicely with dark theme inputs */
+.create-box input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  cursor: pointer;
 }
 
 .member-input-group {
@@ -59,35 +75,48 @@
 }
 
 .add-btn, .create-btn {
-  background-color: #f8bbd0;
+  background-color: #ff8fa3;
   color: #ffffff;
-  border: 2px solid #1e1e1e;
-  border-radius: 12px;
-  font-weight: bold;
+  border: 3px solid #1e1e1e;
+  border-radius: 16px;
+  font-weight: 900;
   cursor: pointer;
-  transition: transform 0.1s ease;
+  box-shadow: 4px 4px 0px #1e1e1e;
+  font-family: 'Caveat', cursive, sans-serif;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
 
 .add-btn {
   padding: 0 24px;
+  font-size: 1.4rem;
 }
 
 .create-btn {
   width: 100%;
-  padding: 16px;
+  padding: 12px;
   margin-top: 10px;
-  font-size: 1.1rem;
+  font-size: 1.6rem;
 }
 
 .add-btn:active, .create-btn:active {
-  transform: scale(0.98);
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px 0px #1e1e1e;
 }
 
 .members-list {
-  background: #f5f5f5;
-  padding: 10px;
-  border-radius: 8px;
-  color: #333;
+  background: #fffdf9;
+  padding: 12px;
+  border-radius: 16px;
+  border: 2px solid #1e1e1e;
+  color: #1e1e1e;
   max-height: 100px;
   overflow-y: auto;
+  box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.05);
+}
+
+.member-tag {
+  font-size: 1.3rem;
+  font-weight: 800;
+  margin: 4px 0;
+  color: #ff8fa3;
 }
