@@ -1,6 +1,5 @@
-// src/App.jsx
 import { useState } from "react";
-import "./App.css";git
+import "./App.css";
 import LandingPage from "./LandingPage";
 import ChooseType from "./ChooseType";
 import CreatePiggy from "./CreatePiggy";
@@ -16,7 +15,7 @@ function App() {
   const [currentStep, setCurrentStep] = useState("landing");
   const [piggies, setPiggies] = useState([]);
   const [activePiggyIndex, setActivePiggyIndex] = useState(null);
-  const [globalWallet, setGlobalWallet] = useState(0);
+  const [globalWallet, setGlobalWallet] = useState(1000); // Updated to start at 1000
   const [lockedFamilyRole, setLockedFamilyRole] = useState(null);
   const [selectedType, setSelectedType] = useState("");
   const [desktopWindow, setDesktopWindow] = useState("desktop");
@@ -86,11 +85,20 @@ function App() {
           <img src={lettericon} alt="Letters" className="desktop-icon-img" />
           <span>Letters</span>
         </div>
+      </div>
 
-        {/* Wallet Monitor */}
-        <div className="wallet-monitor">
-          👛 Wallet:<br />₹{globalWallet}
-        </div>
+      {/* Moved Wallet Monitor Outside Icons */}
+      <div className="wallet-monitor">
+        👛 Wallet
+        <br />
+        ₹{globalWallet}
+        {/* Recommended Demo Feature Button */}
+        <button
+          className="wallet-add-btn"
+          onClick={() => setGlobalWallet(globalWallet + 500)}
+        >
+          + ₹500
+        </button>
       </div>
 
       {/* 🎛️ DASHBOARD VIEW */}
@@ -105,6 +113,8 @@ function App() {
               piggy={activePiggy}
               globalRole={lockedFamilyRole}
               piggyType={selectedType}
+              globalWallet={globalWallet}
+              setGlobalWallet={setGlobalWallet}
               onUpdatePiggy={(updatedData) => {
                 const updatedList = [...piggies];
                 updatedList[activePiggyIndex] = updatedData;

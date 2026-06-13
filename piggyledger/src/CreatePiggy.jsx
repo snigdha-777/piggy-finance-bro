@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./CreatePiggy.css";
 
 function CreatePiggy({ setPiggy, piggyType, lockedFamilyRole, setGlobalRole }) {
@@ -6,15 +6,36 @@ function CreatePiggy({ setPiggy, piggyType, lockedFamilyRole, setGlobalRole }) {
   const [goal, setGoal] = useState("");
   const [date, setDate] = useState(""); 
   const [member, setMember] = useState("");
-  const [members, setMembers] = useState([]);
-  const [inviteCodeInput, setInviteCodeInput] = useState("");
   
+  // Load family members permanently from localStorage if they exist
+  const [members, setMembers] = useState(() => {
+    const saved = localStorage.getItem("permanent_family_members");
+    return saved ? JSON.parse(saved) : [];
+  });
+  
+  const [inviteCodeInput, setInviteCodeInput] = useState("");
   const [familyRole, setFamilyRole] = useState(lockedFamilyRole || "parent");
+
+  // Save changes permanently to localStorage whenever members array updates
+  const updateAndPersistMembers = (newMembersArray) => {
+    setMembers(newMembersArray);
+    localStorage.setItem("permanent_family_members", JSON.stringify(newMembersArray));
+  };
 
   function addMember() {
     if (!member.trim()) return;
-    setMembers([...members, member]);
+    if (members.includes(member.trim())) {
+      alert("Member already added!");
+      return;
+    }
+    const updated = [...members, member.trim()];
+    updateAndPersistMembers(updated);
     setMember("");
+  }
+
+  function removeMember(indexToRemove) {
+    const updated = members.filter((_, idx) => idx !== indexToRemove);
+    updateAndPersistMembers(updated);
   }
 
   function handleJoinCode() {
@@ -35,8 +56,9 @@ function CreatePiggy({ setPiggy, piggyType, lockedFamilyRole, setGlobalRole }) {
       logs: [
         { timestamp: "13-06-2026, 14:22", user: "Parent 👑", type: "deposit", amount: 15000, note: "Initial family base pool setup." }
       ]
-    });
-  }
+    }
+  );
+}
 
   function createPiggy() {
     if (!piggyName.trim() || !goal) {
@@ -131,7 +153,15 @@ function CreatePiggy({ setPiggy, piggyType, lockedFamilyRole, setGlobalRole }) {
                 {members.length > 0 && (
                   <div className="members-list">
                     {members.map((m, i) => (
-                      <p key={i} className="member-tag">👤 {m}</p>
+                      <p key={i} className="member-tag" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                        <span>👤 {m}</span>
+                        <span 
+                          onClick={() => removeMember(i)} 
+                          style={{ cursor: "pointer", color: "#ff8fa3", fontWeight: "bold", marginLeft: "10px", fontSize: "1.2rem" }}
+                        >
+                          ×
+                        </span>
+                      </p>
                     ))}
                   </div>
                 )}

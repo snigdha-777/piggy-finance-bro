@@ -203,3 +203,22 @@
   0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0; }
   100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
 }
+
+/* ===== DEMO ATTACHMENTS ===== */
+.wallet-add-btn {
+  margin-top: 10px;
+  width: 100%;
+  background: #ff8fa3;
+  border: 2px solid #1e1e1e;
+  border-radius: 10px;
+  padding: 6px;
+  cursor: pointer;
+  font-weight: 900;
+  font-family: 'Caveat', cursive, sans-serif;
+  font-size: 1.1rem;
+  transition: transform 0.1s ease;
+}
+
+.wallet-add-btn:active {
+  transform: scale(0.96);
+}

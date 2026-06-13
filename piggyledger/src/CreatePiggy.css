@@ -4,7 +4,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  /* Changed from min-height: 100vh to fit properly within the fixed screen */
+  height: calc(100vh - 50px); 
+  width: 100vw;
+  box-sizing: border-box;
+  padding: 20px;
   background-image: url("./assets/download (4).jpg");
   background-size: cover;
   background-repeat: no-repeat;
@@ -24,6 +28,26 @@
   max-width: 520px;
   box-sizing: border-box;
   gap: 16px;
+
+  /* 🚨 FIXES SCROLLING WITHOUT RUINING THE RETRO SKIN 🚨 */
+  max-height: 90vh;
+  overflow-y: auto;
+  scrollbar-width: thin; /* For Firefox */
+}
+
+/* Retro Custom Scrollbar styling inside the paper container */
+.create-box::-webkit-scrollbar {
+  width: 8px;
+}
+
+.create-box::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.create-box::-webkit-scrollbar-thumb {
+  background: #ff8fa3;
+  border: 2px solid #1e1e1e;
+  border-radius: 10px;
 }
 
 .create-title {
@@ -159,7 +183,7 @@
   border-radius: 16px;
   border: 2px solid #1e1e1e;
   color: #1e1e1e;
-  max-height: 100px;
+  max-height: 120px; /* Slight bump for visibility balance */
   overflow-y: auto;
   box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.05);
 }
@@ -178,6 +202,7 @@
   gap: 14px;
   width: 100%;
 }
+
 .code-input {
   text-transform: uppercase;
   letter-spacing: 2px;
