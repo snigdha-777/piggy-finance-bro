@@ -1,7 +1,21 @@
-import LandingPage from "./LandingPage";
+import { useState } from "react";
+
+import CreatePiggy from "./CreatePiggy";
+import Dashboard from "./Dashboard";
 
 function App() {
-  return <LandingPage />;
+
+  const [piggy, setPiggy] = useState(null);
+
+  return (
+    <>
+      {!piggy ? (
+        <CreatePiggy setPiggy={setPiggy} />
+      ) : (
+        <Dashboard piggy={piggy} />
+      )}
+    </>
+  );
 }
 
 export default App;
