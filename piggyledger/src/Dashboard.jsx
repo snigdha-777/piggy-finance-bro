@@ -7,7 +7,7 @@ function Dashboard({
   globalWallet,
   setGlobalWallet,
   onUpdatePiggy,
-  playClick // Passed down correctly from App.jsx
+  playClick
 }) {
   const [depositAmount, setDepositAmount] = useState("");
   const [depositNote, setDepositNote] = useState("");
@@ -26,7 +26,6 @@ function Dashboard({
       return;
     }
 
-    // 🔊 Trigger the click/feed sound effect!
     if (typeof playClick === "function") playClick();
 
     const formattedDate = new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "2-digit", year: "numeric" });
@@ -71,7 +70,6 @@ function Dashboard({
       return;
     }
 
-    // Dynamic Voting Rules Engine for Joint Workspaces
     if (piggy.members && piggy.members.length > 0) {
       alert(`⚠️ Shared Vault Rule Triggered!\nThis action requires consent from all registered participants.`);
       let allApproved = true;
