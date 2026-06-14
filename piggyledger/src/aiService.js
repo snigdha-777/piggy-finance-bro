@@ -17,7 +17,7 @@ const functions = getFunctions(app);
 
 // 👑 HACKATHON ACCELERATOR: Safely point to local ports when running on localhost
 if (window.location.hostname === "localhost") {
-  connectFunctionsEmulator(functions, "127.0.0.1", 5002);
+  connectFunctionsEmulator(functions, "127.0.0.1", 5085);
 }
 
 /**
